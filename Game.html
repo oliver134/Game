@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game</title>
+    <style>
+        /* Настройки мелкого шрифта */
+        #location-info {
+            font-size: 10px;
+            color: #555; /* Серый цвет, чтобы текст был ненавязчивым */
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Картинка -->
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXU6sU3x8LCwVXc0kJ_-7IpQT_lpiV-dVeQw&s" alt="hamster">
+
+    <!-- Контейнер для вывода данных о местоположении -->
+    <div id="location-info">Loading...</div>
+
+    <script>
+        // Используем IP-API для получения данных о местоположении
+        fetch('http://ip-api.com/json/')
+            .then(response => response.json())
+            .then(data => {
+                // Получаем нужные данные
+                const country = data.country;
+                const city = data.city;
+                const coordinates = `${data.lat}, ${data.lon}`;
+                const ip = data.query;
+
+                // Формируем текст для отображения
+                const logData = `IP: ${ip}, Country: ${country}, City: ${city}, Coordinates: ${coordinates}`;
+                
+                // Выводим данные на страницу
+                document.getElementById('location-info').textContent = logData;
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                document.getElementById('location-info').textContent = 'Не удалось загрузить данные о местоположении.';
+            });
+    </script>
+</body>
+</html>
